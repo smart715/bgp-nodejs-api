@@ -1,0 +1,32 @@
+$primary: #00AFF0;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.btn-primary {
+	border-radius: 30px;
+    height: 45px;
+}
+a:hover{
+    text-decoration: auto!important;
+}
+.btn-secondary{
+	border-radius: 30px;
+    height: 45px;
+}
+.small-username {
+    font-size: .755em !important;font-weight: 400 !important;
+}
+.text-secondary {
+    color: #a7a7a7!important;
+}
+
+.badge-secondary{
+    background-color: #2b2b2b !important;
+}
+@media (min-width: 1200px) {
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1340px;
+}
+}
