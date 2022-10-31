@@ -1,5 +1,7 @@
 const db = require("./app/models");
-var bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("./app/config/auth.config");
 
 const Role = db.role;
 const User = db.user;
@@ -34,6 +36,8 @@ async function generateAdminAccount() {
     email: "admin@gmail.com",
     password: bcrypt.hashSync("123123", 8),
     status: true,
+    is_verified: true,
+    confirmationCode: jwt.sign({ email: "admin@gmail.com" }, config.secret),
     roleId: 3,
   });
 }

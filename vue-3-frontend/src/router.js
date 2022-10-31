@@ -14,6 +14,7 @@ const FlowSpecLayout = () =>
   import("./components/pages/user/FlowSpecLayout.vue");
 const FlowSpecCreate = () => import("./components/pages/user/FlowSpecAdd.vue");
 const FlowSpecEdit = () => import("./components/pages/user/FlowSpecEdit.vue");
+const Welcome = () => import("./components/Welcome.vue");
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: Profile,
+  },
+  {
+    path: "/confirm/:confirmationCode",
+    name: "welcome",
+    component: Welcome,
   },
   {
     path: "/admin",

@@ -9,6 +9,17 @@ exports.allAccess = (req, res) => {
 exports.userBoard = (req, res) => {
   res.status(200).send("User Content.");
 };
+exports.getUserProfile = async (req, res) => {
+  const response = await User.findOne({
+    where: { id: req.userId },
+    attributes: ["id", "username", "email", "createdAt", "updatedAt", "roleId"],
+  });
+  if (response) {
+    res.status(200).send({ profile: response });
+  } else {
+    res.status(404).send({ message: "User not found." });
+  }
+};
 exports.adminBoard = async (req, res) => {
   const { currentPage, perPage, text } = req.query;
   const { count, rows } = await User.findAndCountAll({
@@ -72,6 +83,27 @@ exports.updateUser = async (req, res) => {
   if (password) newUser.password = bcrypt.hashSync(password, 8);
   const [user, created] = await User.upsert(newUser);
   if (user) return res.status(200).send({ user: user });
+};
+exports.updateProfile = async (req, res) => {
+  const { username, email, password } = req.body;
+  const newUser = {
+    id: req.userId,
+    username: username,
+    email: email,
+    updatedAt: new Date(),
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "createdAt",
+      "updatedAt",
+      "roleId",
+      "status",
+    ],
+  };
+  if (password) newUser.password = bcrypt.hashSync(password, 8);
+  const [user, created] = await User.upsert(newUser);
+  if (user) return res.status(200).send({ profile: user });
 };
 exports.removeUser = async (req, res) => {
   const id = req.params.id;

@@ -8,9 +8,9 @@
       />
       <Form @submit="handleLogin" :validation-schema="schema" class="p-5">
         <div class="form-group">
-          <label for="username">Username</label>
-          <Field name="username" type="text" class="form-control" />
-          <ErrorMessage name="username" class="error-feedback" />
+          <label for="email">Email</label>
+          <Field name="email" type="email" class="form-control" />
+          <ErrorMessage name="email" class="error-feedback" />
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      username: yup.string().required("Username is required!"),
+      email: yup.string().required("Email is required!"),
       password: yup.string().required("Password is required!"),
     });
     return {
@@ -63,7 +63,7 @@ export default {
   },
   created() {
     if (this.loggedIn) {
-      this.$router.push({ name: 'profile'});
+      this.$router.push({ name: "profile" });
     }
   },
   methods: {

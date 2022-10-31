@@ -9,7 +9,16 @@ module.exports = function (app) {
     next();
   });
   app.get("/api/all", [authJwt.checkApiKey], controller.allAccess);
-  app.get("/api/user", [authJwt.checkApiKey, authJwt.verifyToken], controller.userBoard);
+  app.get(
+    "/api/profile",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.getUserProfile
+  );
+  app.get(
+    "/api/user",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.userBoard
+  );
   app.get(
     "/api/mod",
     [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isModerator],
@@ -39,5 +48,10 @@ module.exports = function (app) {
     "/api/admin/users/changeStatus/:id",
     [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.changeStatus
+  );
+  app.put(
+    "/api/profile/update",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.updateProfile
   );
 };

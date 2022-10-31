@@ -8,6 +8,11 @@ module.exports = function (app) {
     );
     next();
   });
+  app.get(
+    "/api/auth/confirm/:confirmationCode",
+    [authJwt.checkApiKey],
+    controller.verifyUser
+  );
   app.post(
     "/api/auth/signup",
     [authJwt.checkApiKey, verifySignUp.checkDuplicateUsernameOrEmail],
