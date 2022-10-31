@@ -1,6 +1,6 @@
 import axios from "axios";
 import authHeader from "./auth-header";
-const API_URL = "http://localhost:8080/api/test/";
+const API_URL = "http://localhost:8080/api/";
 
 class FlowSpecService {
   getFlowSpecRules(url, pageInform) {
@@ -15,6 +15,16 @@ class FlowSpecService {
   }
   createFlowSpecRules(url, rule) {
     return axios.post(API_URL + url, rule, {
+      headers: authHeader(),
+    });
+  }
+  updateFlowSpecRules(url, rule) {
+    return axios.put(API_URL + url, rule, {
+      headers: authHeader(),
+    });
+  }
+  getFlowSpecRuleById(url) {
+    return axios.get(API_URL + url, {
       headers: authHeader(),
     });
   }

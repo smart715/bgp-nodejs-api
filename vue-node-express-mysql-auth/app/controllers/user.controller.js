@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.user;
 const Op = db.Sequelize.Op;
+var bcrypt = require("bcryptjs");
 
 exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
@@ -18,7 +19,15 @@ exports.adminBoard = async (req, res) => {
     },
     offset: (parseInt(currentPage) - 1) * parseInt(perPage),
     limit: parseInt(perPage),
-    attributes: ["id", "username", "email", "createdAt", "updatedAt", "roleId"],
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "createdAt",
+      "updatedAt",
+      "roleId",
+      "status",
+    ],
   });
   if (rows)
     return res
@@ -29,20 +38,39 @@ exports.getUserById = async (req, res) => {
   const id = req.params.id;
   const user = await User.findOne({
     where: { id },
-    attributes: ["id", "username", "email", "createdAt", "updatedAt", "roleId"],
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "createdAt",
+      "updatedAt",
+      "roleId",
+      "status",
+    ],
   });
   if (user) return res.status(200).send({ user: user });
 };
 exports.updateUser = async (req, res) => {
   const id = req.params.id;
-  const [user, created] = await User.upsert({
+  const { username, email, role, password } = req.body;
+  const newUser = {
     id,
-    username: req.body.username,
-    email: req.body.email,
-    roleId: parseInt(req.body.role),
-    createdAt: new Date(),
-    attributes: ["id", "username", "email", "createdAt", "updatedAt", "roleId"],
-  });
+    username: username,
+    email: email,
+    roleId: parseInt(role),
+    updatedAt: new Date(),
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "createdAt",
+      "updatedAt",
+      "roleId",
+      "status",
+    ],
+  };
+  if (password) newUser.password = bcrypt.hashSync(password, 8);
+  const [user, created] = await User.upsert(newUser);
   if (user) return res.status(200).send({ user: user });
 };
 exports.removeUser = async (req, res) => {
@@ -54,4 +82,23 @@ exports.removeUser = async (req, res) => {
 };
 exports.moderatorBoard = (req, res) => {
   res.status(200).send("Moderator Content.");
+};
+exports.changeStatus = async (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+  const newUser = {
+    id,
+    status,
+    attributes: [
+      "id",
+      "username",
+      "email",
+      "createdAt",
+      "updatedAt",
+      "roleId",
+      "status",
+    ],
+  };
+  const [user, created] = await User.upsert(newUser);
+  if (user) return res.status(200).send({ user: user });
 };

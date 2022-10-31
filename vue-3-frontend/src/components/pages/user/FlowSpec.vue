@@ -3,21 +3,21 @@
     <b-button variant="primary" class="mr-2" size="sm" :to="'/flowspec/create'">
       Create
     </b-button>
+    <div class="d-flex justify-content-end w-100 mx-3">
+      <h5 class="p-0 my-3 mx-3">Search</h5>
+      <b-nav pills>
+        <b-nav-form class="mr-2">
+          <b-form-input
+            :placeholder="'Detail search'"
+            v-model="q"
+            type="search"
+            @input="handleSearchChange"
+            class="mr-1"
+          ></b-form-input>
+        </b-nav-form>
+      </b-nav>
+    </div>
     <b-row class="rules" v-if="total > 0">
-      <div class="d-flex align-items-center w-100 mx-3">
-        <h5 class="text-uppercase p-0 my-3 flex-grow-1">Search</h5>
-        <b-nav pills>
-          <b-nav-form class="mr-2">
-            <b-form-input
-              :placeholder="'Detail search'"
-              v-model="q"
-              type="search"
-              @input="handleSearchChange"
-              class="mr-1"
-            ></b-form-input>
-          </b-nav-form>
-        </b-nav>
-      </div>
       <b-table
         id="rules-table"
         :items="specRules"

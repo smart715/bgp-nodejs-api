@@ -33,6 +33,7 @@ async function generateAdminAccount() {
     username: "admin",
     email: "admin@gmail.com",
     password: bcrypt.hashSync("123123", 8),
+    status: true,
     roleId: 3,
   });
 }

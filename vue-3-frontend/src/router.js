@@ -13,6 +13,7 @@ const FlowSpec = () => import("./components/pages/user/FlowSpec.vue");
 const FlowSpecLayout = () =>
   import("./components/pages/user/FlowSpecLayout.vue");
 const FlowSpecCreate = () => import("./components/pages/user/FlowSpecAdd.vue");
+const FlowSpecEdit = () => import("./components/pages/user/FlowSpecEdit.vue");
 
 const routes = [
   {
@@ -80,6 +81,11 @@ const routes = [
         path: "create",
         name: "flowspecCreate",
         component: FlowSpecCreate,
+      },
+      {
+        path: "edit/:id",
+        name: "flowspecEdit",
+        component: FlowSpecEdit,
       },
     ],
   },
