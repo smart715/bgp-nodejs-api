@@ -19,4 +19,14 @@ module.exports = function (app) {
     controller.signup
   );
   app.post("/api/auth/signin", [authJwt.checkApiKey], controller.signin);
+  app.post(
+    "/api/auth/sendResetEmail",
+    [authJwt.checkApiKey],
+    controller.sendResetEmail
+  );
+  app.post(
+    "/api/auth/passwordReset",
+    [authJwt.checkApiKey],
+    controller.passwordReset
+  );
 };

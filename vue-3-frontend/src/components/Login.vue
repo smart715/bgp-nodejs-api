@@ -17,14 +17,17 @@
           <Field name="password" type="password" class="form-control" />
           <ErrorMessage name="password" class="error-feedback" />
         </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block" :disabled="loading">
-            <span
-              v-show="loading"
-              class="spinner-border spinner-border-sm"
-            ></span>
-            <span>Login</span>
-          </button>
+        <div class="d-flex justify-content-between mt-2">
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" :disabled="loading">
+              <span
+                v-show="loading"
+                class="spinner-border spinner-border-sm"
+              ></span>
+              <span>Login</span>
+            </button>
+          </div>
+          <b-link href="/passwordReset"> Password Reset </b-link>
         </div>
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">

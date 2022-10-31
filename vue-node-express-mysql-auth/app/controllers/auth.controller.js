@@ -87,9 +87,50 @@ exports.verifyUser = (req, res, next) => {
           res.status(500).send({ message: err });
           return;
         } else {
-          res.status(200).send({ message: "Acccount confirmed!" });
+          res.status(200).send({ message: "Acccount confirmed!", user: user });
         }
       });
     })
     .catch((e) => console.log("error", e));
+};
+
+exports.sendResetEmail = (req, res, next) => {
+  User.findOne({
+    where: {
+      email: req.body.email,
+      is_verified: true,
+    },
+  }).then((user) => {
+    if (user) {
+      res.send({
+        message:
+          "Password reset email successfully sent! Please check your email",
+      });
+      nodemailer.sendPasswordResetEmail(
+        user.username,
+        user.email,
+        user.confirmationCode
+      );
+    } else
+      return res
+        .status(200)
+        .send({ message: "User not found, please register" });
+  });
+};
+
+exports.passwordReset = async (req, res) => {
+  User.findOne({
+    where: {
+      confirmationCode: req.body.code,
+      is_verified: true,
+    },
+  }).then((user) => {
+    if (user) {
+      user.password = bcrypt.hashSync(req.body.password, 8);
+      user.save();
+      return res
+        .status(200)
+        .send({ message: "password reset successfully sent" });
+    } else return res.status(500).send({ messsage: "Password reset failed" });
+  });
 };

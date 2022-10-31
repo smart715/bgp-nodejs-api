@@ -13,16 +13,6 @@
       <b-form>
         <b-row>
           <div class="w-100 mx-3 mt-3">
-            <b-form-group id="input-group-1" label="UUID" label-for="uuid">
-              <b-form-input
-                id="uuid"
-                name="uuid"
-                v-model="uuid"
-                type="text"
-                placeholder="Enter uuid"
-                required
-              ></b-form-input>
-            </b-form-group>
             <b-form-group
               id="input-group-2"
               label="details"
@@ -210,7 +200,6 @@ export default {
   name: "FlowSpecCreate",
   data: function () {
     return {
-      uuid: 0,
       details: "",
       status: "active",
       destinationPrefix: "",
@@ -248,7 +237,6 @@ export default {
       const response = await FlowSpecService.createFlowSpecRules(
         "flowspec/create",
         {
-          uuid: this.uuid,
           details: this.details,
           status: this.status,
           destinationPrefix: this.destinationPrefix,

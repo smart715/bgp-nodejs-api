@@ -14,7 +14,6 @@ exports.getSpecByUserId = async (req, res) => {
     limit: parseInt(perPage),
     attributes: [
       "id",
-      "uuid",
       "details",
       "status",
       "destinationPrefix",
@@ -28,6 +27,8 @@ exports.getSpecByUserId = async (req, res) => {
       "packetLength",
       "DSCP",
       "FREncoding",
+      "is_blocked",
+      "rate_limit",
     ],
   });
   return res

@@ -8,7 +8,11 @@ module.exports = function (app) {
     );
     next();
   });
-  app.get("/api/flowspec", [authJwt.checkApiKey, authJwt.verifyToken], controller.getSpecByUserId);
+  app.get(
+    "/api/flowspec",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.getSpecByUserId
+  );
   app.post(
     "/api/flowspec/create",
     [authJwt.checkApiKey, authJwt.verifyToken],

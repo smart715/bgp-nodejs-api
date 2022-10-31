@@ -47,4 +47,14 @@ export default {
         return response.data;
       });
   },
+  sendResetEmail(url, value) {
+    return axios.post(API_URL + url, value, {
+      headers: authHeader(),
+    });
+  },
+  passwordReset(url, value) {
+    return axios.post(API_URL + url, value, {
+      headers: authHeader(),
+    });
+  },
 };

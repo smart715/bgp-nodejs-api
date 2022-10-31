@@ -15,6 +15,8 @@ const FlowSpecLayout = () =>
 const FlowSpecCreate = () => import("./components/pages/user/FlowSpecAdd.vue");
 const FlowSpecEdit = () => import("./components/pages/user/FlowSpecEdit.vue");
 const Welcome = () => import("./components/Welcome.vue");
+const PasswordReset = () => import("./components/PasswordReset.vue");
+const PasswordResetInput = () => import("./components/PasswordResetInput.vue");
 
 const routes = [
   {
@@ -40,6 +42,16 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: Profile,
+  },
+  {
+    path: "/passwordReset",
+    name: "passwordReset",
+    component: PasswordReset,
+  },
+  {
+    path: "/passwordResetInput/:confirmationCode",
+    name: "passwordResetInput",
+    component: PasswordResetInput,
   },
   {
     path: "/confirm/:confirmationCode",
@@ -101,7 +113,14 @@ const router = createRouter({
   routes,
 });
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register", "/home"];
+  const publicPages = [
+    "/login",
+    "/register",
+    "/home",
+    "/passwordReset",
+    "/confirm",
+    "/passwordResetInput",
+  ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
   // trying to access a restricted page + not logged in

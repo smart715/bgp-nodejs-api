@@ -13,16 +13,6 @@
       <b-form>
         <b-row>
           <div class="w-100 mx-3 mt-3">
-            <b-form-group id="input-group-1" label="UUID" label-for="uuid">
-              <b-form-input
-                id="uuid"
-                name="uuid"
-                v-model="rule.uuid"
-                type="number"
-                placeholder="Enter uuid"
-                required
-              ></b-form-input>
-            </b-form-group>
             <b-form-group
               id="input-group-2"
               label="details"
@@ -211,7 +201,6 @@ export default {
   data: function () {
     return {
       rule: null,
-      uuid: 0,
       details: "",
       status: "active",
       destinationPrefix: "",

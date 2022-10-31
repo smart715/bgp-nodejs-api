@@ -30,7 +30,7 @@
         class="small nowrap"
       >
         <template #cell(actions)="data">
-          <b-button
+          <!-- <b-button
             variant="primary"
             class="mr-2"
             size="sm"
@@ -45,7 +45,36 @@
             class="ms-1"
           >
             <font-awesome-icon icon="trash" />
-          </b-button>
+          </b-button> -->
+          <b-dropdown
+            id="dropdown-offset"
+            offset="3"
+            text="Actions"
+            class="sm-1"
+          >
+            <b-dropdown-item href="#">
+              <b-nav-form class="">
+                <span class="d-flex align-items-center me-1">Rate</span>
+                <b-form-input
+                  :placeholder="'Detail search'"
+                  v-model="data.item.rate_limit"
+                  type="number"
+                  @input="handleRateLimitChange(data.item)"
+                ></b-form-input>
+              </b-nav-form>
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item href="#">
+              <b-button
+                @click.prevent="block(data.item)"
+                variant="primary"
+                size="sm"
+                class="ms-1"
+              >
+                {{ data.item.is_blocked ? "Blocked" : "UnBlocked" }}
+              </b-button>
+            </b-dropdown-item>
+          </b-dropdown>
         </template>
       </b-table>
       <b-row class="text-center m-3 d-block">
@@ -77,7 +106,6 @@ export default {
       total: 0,
       fields: [
         { key: "id", label: "Id" },
-        { key: "uuid", label: "UUID" },
         { key: "details", label: "Details" },
         { key: "status", label: "status" },
         { key: "destinationPrefix", label: "destinationPrefix" },
@@ -130,6 +158,15 @@ export default {
     },
     handleSearchChange() {
       this.loadFlowSpec();
+    },
+    async handleRateLimitChange(item) {
+      const url = "flowspec/update/" + item.id;
+      await FlowSpecService.updateFlowSpecRules(url, item);
+    },
+    async block(item) {
+      item.is_blocked = true;
+      const url = "flowspec/update/" + item.id;
+      await FlowSpecService.updateFlowSpecRules(url, item);
     },
   },
 };

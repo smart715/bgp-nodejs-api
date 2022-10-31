@@ -1,12 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
   const FlowSpec = sequelize.define("flowspec", {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
-      autoIncrement: true,
-    },
-    uuid: {
-      type: Sequelize.INTEGER,
     },
     details: {
       type: Sequelize.STRING,
@@ -52,6 +49,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     FREncoding: {
       type: Sequelize.STRING,
+    },
+    is_blocked: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    rate_limit: {
+      type: Sequelize.DECIMAL,
     },
   });
   return FlowSpec;
