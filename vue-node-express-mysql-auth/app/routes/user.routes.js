@@ -8,36 +8,36 @@ module.exports = function (app) {
     );
     next();
   });
-  app.get("/api/all", controller.allAccess);
-  app.get("/api/user", [authJwt.verifyToken], controller.userBoard);
+  app.get("/api/all", [authJwt.checkApiKey], controller.allAccess);
+  app.get("/api/user", [authJwt.checkApiKey, authJwt.verifyToken], controller.userBoard);
   app.get(
     "/api/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
+    [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isModerator],
     controller.moderatorBoard
   );
   app.get(
     "/api/admin/users",
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
   app.get(
     "/api/admin/users/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.getUserById
   );
   app.put(
     "/api/admin/users/edit/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.updateUser
   );
   app.delete(
     "/api/admin/users/delete/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.removeUser
   );
   app.post(
     "/api/admin/users/changeStatus/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.changeStatus
   );
 };

@@ -8,25 +8,25 @@ module.exports = function (app) {
     );
     next();
   });
-  app.get("/api/flowspec", [authJwt.verifyToken], controller.getSpecByUserId);
+  app.get("/api/flowspec", [authJwt.checkApiKey, authJwt.verifyToken], controller.getSpecByUserId);
   app.post(
     "/api/flowspec/create",
-    [authJwt.verifyToken],
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.createFlowSpecRule
   );
   app.put(
     "/api/flowspec/update/:id",
-    [authJwt.verifyToken],
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.updateFlowSpecRule
   );
   app.delete(
     "/api/flowspec/delete/:id",
-    [authJwt.verifyToken],
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.removeFlowSpecRule
   );
   app.get(
     "/api/flowspec/:id",
-    [authJwt.verifyToken],
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.getRuleByIdByUser
   );
 };
