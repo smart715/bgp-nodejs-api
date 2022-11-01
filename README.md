@@ -1,9 +1,7 @@
-# BGP NodeJS API
+# BGP NodeJS 
+## Node Version
 
-
-
-# How to install
-
+Node v14.17.0
 ## Frontend
 
 ```
@@ -20,9 +18,10 @@ npm run seed // Or execute admin_seed.sql
 npm run start
 ```
 
-# Admin role
+## Admin info
 
-username: admin
+username: admin@gmail.com
+
 password: 123123
 
 
