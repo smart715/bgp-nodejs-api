@@ -13,6 +13,11 @@ module.exports = function (app) {
     [authJwt.checkApiKey, authJwt.verifyToken],
     controller.getSpecByUserId
   );
+  app.get(
+    "/api/flowspec/all",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.getAllSpecRules
+  );
   app.post(
     "/api/flowspec/create",
     [authJwt.checkApiKey, authJwt.verifyToken],

@@ -18,14 +18,13 @@
               label="details"
               label-for="details"
             >
-              <b-form-input
+              <b-form-textarea
                 id="details"
-                name="details"
                 v-model="rule.details"
-                type="text"
                 placeholder="Enter details"
-                required
-              ></b-form-input>
+                rows="3"
+                max-rows="6"
+              ></b-form-textarea>
             </b-form-group>
             <b-form-group label="Status" label-for="status" class="mb-3">
               <b-form-select
@@ -46,6 +45,20 @@
                 v-model="rule.destinationPrefix"
                 type="text"
                 placeholder="Enter destinationPrefix"
+                required
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-4"
+              label="Rate Limit"
+              label-for="rate_limit"
+            >
+              <b-form-input
+                id="rate_limit"
+                name="rate_limit"
+                v-model="rule.rate_limit"
+                type="text"
+                placeholder="Enter rate limit"
                 required
               ></b-form-input>
             </b-form-group>
@@ -251,13 +264,6 @@ export default {
       if (response) {
         this.rule = response.data.rule;
         this.$router.push({ name: "rule" });
-        // this.user = response.data.user;
-        // this.$bvToast.toast("saved", {
-        //   autoHideDelay: 2000,
-        //   title: "Success",
-        //   solid: true,
-        //   toaster: "b-toaster-bottom-left",
-        // });
       }
     },
   },

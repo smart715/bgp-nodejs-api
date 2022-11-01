@@ -1,9 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
   const FlowSpec = sequelize.define("flowspec", {
     id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    uuid: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
-      primaryKey: true,
     },
     details: {
       type: Sequelize.STRING,
@@ -55,7 +59,7 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: false,
     },
     rate_limit: {
-      type: Sequelize.DECIMAL,
+      type: Sequelize.FLOAT,
     },
   });
   return FlowSpec;

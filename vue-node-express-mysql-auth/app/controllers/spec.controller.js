@@ -14,6 +14,7 @@ exports.getSpecByUserId = async (req, res) => {
     limit: parseInt(perPage),
     attributes: [
       "id",
+      "uuid",
       "details",
       "status",
       "destinationPrefix",
@@ -34,6 +35,10 @@ exports.getSpecByUserId = async (req, res) => {
   return res
     .status(200)
     .send({ specRules: rows, total: count, per_page: perPage });
+};
+exports.getAllSpecRules = async (req, res) => {
+  const response = await FlowSpec.findAll({});
+  return res.status(200).send(response);
 };
 exports.createFlowSpecRule = async (req, res) => {
   const rule = { ...req.body };

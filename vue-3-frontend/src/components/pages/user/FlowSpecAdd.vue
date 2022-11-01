@@ -19,14 +19,13 @@
               label="details"
               label-for="details"
             >
-              <b-form-input
+              <b-form-textarea
                 id="details"
-                name="details"
                 v-model="details"
-                type="text"
                 placeholder="Enter details"
-                required
-              ></b-form-input>
+                rows="3"
+                max-rows="6"
+              ></b-form-textarea>
             </b-form-group>
             <b-form-group label="Status" label-for="status" class="mb-3">
               <b-form-select
@@ -50,6 +49,21 @@
                 required
               ></b-form-input>
             </b-form-group>
+            <b-form-group
+              id="input-group-4"
+              label="RateLimit"
+              label-for="rate_limit"
+            >
+              <b-form-input
+                id="rate_limit"
+                name="rate_limit"
+                v-model="rate_limit"
+                type="text"
+                placeholder="Enter rate limit"
+                required
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group
               id="input-group-5"
               label="SourcePrefix"
@@ -186,6 +200,14 @@
                 required
               ></b-form-input>
             </b-form-group>
+            <b-form-group label="IS blocked" label-for="block" class="mb-3">
+              <b-form-select
+                id="block"
+                v-model="is_blocked"
+                :options="booleanOptions"
+                required
+              />
+            </b-form-group>
           </div>
         </b-row>
       </b-form>
@@ -199,7 +221,9 @@ export default {
   name: "FlowSpecCreate",
   data: function () {
     return {
+      rate_limit: 0,
       details: "",
+      is_blocked: false,
       status: "active",
       destinationPrefix: "",
       sourcePrefix: "",
@@ -223,6 +247,16 @@ export default {
           text: "Inactive",
         },
       ],
+      booleanOptions: [
+        {
+          value: true,
+          text: "True",
+        },
+        {
+          value: false,
+          text: "False",
+        },
+      ],
     };
   },
   components: {
@@ -233,21 +267,16 @@ export default {
       return this.$store.state.auth.user;
     },
   },
-  mounted() {
-    // this.loadUser();
-  },
   methods: {
-    // async loadUser() {
-    //   const response = await UserService.getUserById("/users/" + this.userId);
-    //   this.user = response.data.user;
-    // },
     async saveSettings() {
       this.errors = {};
       const response = await FlowSpecService.createFlowSpecRules(
         "flowspec/create",
         {
+          rate_limit: this.rate_limit,
           details: this.details,
           status: this.status,
+          is_blocked: this.is_blocked,
           destinationPrefix: this.destinationPrefix,
           sourcePrefix: this.sourcePrefix,
           ipProtocol: this.ipProtocol,

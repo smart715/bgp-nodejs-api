@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <h1 class="text-center">Rules</h1>
+    <h1 class="text-center">Manual Rules</h1>
     <b-button variant="primary" class="mr-2" size="sm" :to="'/flowspec/create'">
       <font-awesome-icon icon="plus" /> Add
     </b-button>
@@ -45,7 +45,7 @@
                 <b-form-input
                   :placeholder="'Detail search'"
                   v-model="data.item.rate_limit"
-                  type="number"
+                  type="text"
                   @input="handleRateLimitChange(data.item)"
                 ></b-form-input>
               </b-nav-form>
@@ -116,6 +116,7 @@ export default {
       total: 0,
       fields: [
         { key: "id", label: "Id" },
+        { key: "uuid", label: "Uuid" },
         { key: "details", label: "Details" },
         { key: "status", label: "status" },
         { key: "destinationPrefix", label: "destinationPrefix" },
