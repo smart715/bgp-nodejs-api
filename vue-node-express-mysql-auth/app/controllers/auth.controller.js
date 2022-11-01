@@ -72,26 +72,23 @@ exports.signin = (req, res) => {
     });
 };
 
-exports.verifyUser = (req, res, next) => {
-  User.findOne({
-    confirmationCode: req.params.confirmationCode,
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: "User Not found." });
-      }
-
-      user.is_verified = true;
-      user.save((err) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        } else {
-          res.status(200).send({ message: "Acccount confirmed!", user: user });
-        }
-      });
-    })
-    .catch((e) => console.log("error", e));
+exports.verifyUser = async (req, res, next) => {
+  const user = await User.findOne({
+    where: {
+      confirmationCode: req.params.confirmationCode,
+    },
+  });
+  if (user) {
+    User.upsert({ id: user.id, is_verified: true })
+      .then((newUser, created) => {
+        return res
+          .status(200)
+          .send({ message: "Acccount confirmed!", user: newUser });
+      })
+      .catch((err) => res.status(404).send({ message: "User not found!" }));
+  } else {
+    return res.status(404).send({ message: "User not found!" });
+  }
 };
 
 exports.sendResetEmail = (req, res, next) => {
@@ -119,18 +116,24 @@ exports.sendResetEmail = (req, res, next) => {
 };
 
 exports.passwordReset = async (req, res) => {
-  User.findOne({
+  const user = User.findOne({
     where: {
-      confirmationCode: req.body.code,
+      confirmationCode: req.body.confirmationCode,
       is_verified: true,
     },
-  }).then((user) => {
-    if (user) {
-      user.password = bcrypt.hashSync(req.body.password, 8);
-      user.save();
-      return res
-        .status(200)
-        .send({ message: "password reset successfully sent" });
-    } else return res.status(500).send({ messsage: "Password reset failed" });
   });
+  if (user) {
+    User.upsert({
+      id: user.id,
+      password: bcrypt.hashSync(req.body.password, 8),
+    })
+      .then((newUser, created) => {
+        return res
+          .status(200)
+          .send({ message: "password reset successfully sent", user: newUser });
+      })
+      .catch((err) => res.status(404).send({ message: "User not found!" }));
+  } else {
+    return res.status(404).send({ message: "Password reset failed" });
+  }
 };

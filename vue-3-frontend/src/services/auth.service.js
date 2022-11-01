@@ -39,13 +39,9 @@ export default {
     );
   },
   verifyUser(code) {
-    return axios
-      .get(API_URL + "confirm/" + code, {
-        headers: authHeader(),
-      })
-      .then((response) => {
-        return response.data;
-      });
+    return axios.get(API_URL + "confirm/" + code, {
+      headers: authHeader(),
+    });
   },
   sendResetEmail(url, value) {
     return axios.post(API_URL + url, value, {

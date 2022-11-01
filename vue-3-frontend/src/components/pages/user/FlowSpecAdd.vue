@@ -1,5 +1,6 @@
 <template>
-  <b-row class="rule-edit">
+  <b-row class="rule-edit mt-5">
+    <h1 class="text-center">Add new rule</h1>
     <b-col>
       <b-row class="border-bottom sticky-top bg-white page-header">
         <div class="d-flex align-items-center w-100 mx-3 mt-5">
@@ -27,15 +28,13 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <b-form-group id="input-group-3" label="status" label-for="status">
-              <b-form-input
+            <b-form-group label="Status" label-for="status" class="mb-3">
+              <b-form-select
                 id="status"
-                name="status"
                 v-model="status"
-                type="text"
-                placeholder="Enter status"
                 required
-              ></b-form-input>
+                :options="options"
+              />
             </b-form-group>
             <b-form-group
               id="input-group-4"
@@ -214,6 +213,16 @@ export default {
       DSCP: "",
       FREncoding: "",
       errors: {},
+      options: [
+        {
+          value: "active",
+          text: "Active",
+        },
+        {
+          value: "inactive",
+          text: "Inactive",
+        },
+      ],
     };
   },
   components: {

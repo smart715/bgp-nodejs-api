@@ -1,7 +1,8 @@
 <template>
   <div class="mt-5">
+    <h1 class="text-center">Users</h1>
     <div class="d-flex justify-content-end w-100 mx-3">
-      <h5 class="p-0 my-3 mx-2">Search</h5>
+      <h5 class="p-0 my-3 mx-2"><font-awesome-icon icon="search" /></h5>
       <b-nav pills>
         <b-nav-form class="mr-2">
           <b-form-input

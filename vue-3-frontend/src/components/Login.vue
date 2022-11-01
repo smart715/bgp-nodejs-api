@@ -1,11 +1,7 @@
 <template>
   <div class="col-md-12 p-5">
+    <h1 class="text-center">SignIn</h1>
     <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card p-5"
-      />
       <Form @submit="handleLogin" :validation-schema="schema" class="p-5">
         <div class="form-group">
           <label for="email">Email</label>

@@ -1,5 +1,6 @@
 <template>
-  <b-row class="profile-edit" v-if="profile != null">
+  <b-row class="profile-edit mt-5" v-if="profile != null">
+    <h1 class="text-center">Profile Edit</h1>
     <b-col>
       <b-row class="border-bottom sticky-top bg-white page-header">
         <div class="d-flex align-items-center w-100 mx-3 mt-5">

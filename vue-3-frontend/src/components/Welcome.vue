@@ -26,16 +26,17 @@ export default {
     };
   },
   mounted() {
-    if (this.$route.path === "/confirm/:confirmationCode") {
-      this.verifyUser();
-    }
+    this.verifyUser();
   },
   methods: {
     async verifyUser() {
       const response = await AuthService.verifyUser(
         this.$route.params.confirmationCode
       );
-      if (response.status === 200) this.title = response.data.message;
+      if (response.status === 200) {
+        this.$router.push("/login");
+        this.title = response.data.message;
+      }
     },
   },
 };

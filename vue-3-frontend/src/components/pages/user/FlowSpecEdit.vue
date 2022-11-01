@@ -27,15 +27,13 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <b-form-group id="input-group-3" label="status" label-for="status">
-              <b-form-input
+            <b-form-group label="Status" label-for="status" class="mb-3">
+              <b-form-select
                 id="status"
-                name="status"
                 v-model="rule.status"
-                type="text"
-                placeholder="Enter status"
+                :options="options"
                 required
-              ></b-form-input>
+              />
             </b-form-group>
             <b-form-group
               id="input-group-4"
@@ -195,7 +193,6 @@
 </template>
 <script>
 import FlowSpecService from "../../../services/flow-spec.service";
-// import UiFormInput from "../../ui/UiFormInput.vue";
 export default {
   name: "FlowSpecEdit",
   data: function () {
@@ -215,6 +212,16 @@ export default {
       DSCP: "",
       FREncoding: "",
       errors: {},
+      options: [
+        {
+          value: "active",
+          text: "Active",
+        },
+        {
+          value: "inactive",
+          text: "Inactive",
+        },
+      ],
     };
   },
   components: {
@@ -243,6 +250,7 @@ export default {
       );
       if (response) {
         this.rule = response.data.rule;
+        this.$router.push({ name: "rule" });
         // this.user = response.data.user;
         // this.$bvToast.toast("saved", {
         //   autoHideDelay: 2000,

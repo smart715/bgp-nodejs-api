@@ -40,7 +40,7 @@ class UserService {
     });
   }
   changeStatus(url, user) {
-    return axios.post(API_URL + "admin" + url, user, { headers: authHeader() });
+    return axios.put(API_URL + "admin" + url, user, { headers: authHeader() });
   }
 }
 export default new UserService();

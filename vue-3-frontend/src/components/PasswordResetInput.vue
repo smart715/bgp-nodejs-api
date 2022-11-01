@@ -1,24 +1,25 @@
 <template>
   <div class="col-md-12 p-5">
-    <div class="card card-container">
+    <h1 class="text-center">Reset your password</h1>
+    <div class="card">
       <Form
         @submit="handlePasswordReset"
         :validation-schema="schema"
         class="p-5"
       >
         <div class="form-group">
-          <label for="email">New Password</label>
-          <Field name="email" type="email" class="form-control" />
-          <ErrorMessage name="email" class="error-feedback" />
+          <label for="password">New Password</label>
+          <Field name="password" type="text" class="form-control" />
+          <ErrorMessage name="password" class="error-feedback" />
         </div>
         <div class="form-group">
-          <button class="btn btn-primary btn-block">
+          <button class="btn btn-primary btn-block mt-2">
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
-            <span>Send By Email</span>
+            <span>Update</span>
           </button>
         </div>
       </Form>
-      <p class="text-center text-danger">{{ message }}</p>
+      <p class="text-center text-danger">{{ title }}</p>
     </div>
   </div>
 </template>
@@ -35,27 +36,29 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      email: yup.string().required("Email is required!"),
+      password: yup.string().required("Password is required!"),
     });
     return {
+      password: "",
       loading: false,
       message: "",
       schema,
     };
   },
   mounted() {
-    if (this.$route.path === "/passwordResetInput/:confirmationCode") {
-      this.verifyUser();
-    }
+    this.verifyUser();
   },
   methods: {
     async handlePasswordReset(value) {
       const url = "passwordReset";
-      const response = await AuthService.passwordReset(url, value);
+      const response = await AuthService.passwordReset(url, {
+        confirmationCode: this.$route.params.confirmationCode,
+        password: value.password,
+      });
       if (response.status == 200) {
-        this.$route.push("/login");
+        this.$router.push("/login");
       } else {
-        this.$route.push("/passwordReset");
+        this.$router.push("/passwordReset");
       }
     },
     async verifyUser() {

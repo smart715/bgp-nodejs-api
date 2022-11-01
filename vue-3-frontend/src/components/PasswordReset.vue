@@ -1,20 +1,41 @@
 <template>
   <div class="col-md-12 p-5">
-    <div class="card card-container">
+    <h1 class="text-center">Reset your password</h1>
+    <div class="card p-5" v-if="show">
+      <p>
+        Check your email for a link to reset your password.If it doesn't appear
+        within a few minutes, check your spam folder
+      </p>
+      <b-link class="btn btn-success btn-block w-100" :to="{ name: 'login' }">
+        <!-- <span class="spinner-border spinner-border-sm"></span> -->
+        <span>Return to sign in</span>
+      </b-link>
+    </div>
+    <div class="card" v-else>
       <Form
         @submit="handlePasswordReset"
         :validation-schema="schema"
         class="p-5"
       >
+        <p>
+          <b>
+            Enter your user account's verified email address and we will send
+            you a password reset link
+          </b>
+        </p>
         <div class="form-group">
-          <label for="email">Email</label>
-          <Field name="email" type="email" class="form-control" />
+          <Field
+            name="email"
+            type="email"
+            class="form-control"
+            placeholder="test@gmail.com"
+          />
           <ErrorMessage name="email" class="error-feedback" />
         </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block">
+        <div class="form-group mt-2">
+          <button class="btn btn-success btn-block w-100">
             <!-- <span class="spinner-border spinner-border-sm"></span> -->
-            <span>Send By Email</span>
+            <span>Send password reset email</span>
           </button>
         </div>
       </Form>
@@ -41,14 +62,16 @@ export default {
       loading: false,
       message: "",
       schema,
+      show: false,
     };
   },
   methods: {
     async handlePasswordReset(value) {
       const url = "sendResetEmail";
       const response = await AuthService.sendResetEmail(url, value);
-      if (response) {
+      if (response.status == 200) {
         this.message = response.data.message;
+        this.show = true;
         return;
       }
     },

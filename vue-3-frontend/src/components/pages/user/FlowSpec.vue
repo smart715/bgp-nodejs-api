@@ -1,10 +1,13 @@
 <template>
   <div class="mt-5">
+    <h1 class="text-center">Rules</h1>
     <b-button variant="primary" class="mr-2" size="sm" :to="'/flowspec/create'">
-      Create
+      <font-awesome-icon icon="plus" /> Add
     </b-button>
     <div class="d-flex justify-content-end w-100 mx-3">
-      <h5 class="p-0 my-3 mx-3">Search</h5>
+      <h5 class="p-0 my-3 mx-3">
+        <font-awesome-icon icon="search" />
+      </h5>
       <b-nav pills>
         <b-nav-form class="mr-2">
           <b-form-input
@@ -26,29 +29,13 @@
         :fields="fields"
         ref="rules-table"
         hover
-        responsive
         class="small nowrap"
       >
         <template #cell(actions)="data">
-          <!-- <b-button
-            variant="primary"
-            class="mr-2"
-            size="sm"
-            :to="'/flowspec/edit/' + data.item.id"
-          >
-            <font-awesome-icon icon="pencil" />
-          </b-button>
-          <b-button
-            @click.prevent="del(data.item)"
-            variant="danger"
-            size="sm"
-            class="ms-1"
-          >
-            <font-awesome-icon icon="trash" />
-          </b-button> -->
           <b-dropdown
-            id="dropdown-offset"
-            offset="3"
+            id="dropdown-dropleft"
+            dropleft
+            variant="primary"
             text="Actions"
             class="sm-1"
           >
@@ -65,14 +52,37 @@
             </b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item href="#">
-              <b-button
-                @click.prevent="block(data.item)"
-                variant="primary"
-                size="sm"
-                class="ms-1"
-              >
-                {{ data.item.is_blocked ? "Blocked" : "UnBlocked" }}
-              </b-button>
+              <div class="d-flex justify-content-center">
+                <b-button
+                  @click.prevent="block(data.item)"
+                  variant="primary"
+                  size="sm"
+                  class="ms-1"
+                >
+                  {{ data.item.is_blocked ? "Blocked" : "UnBlocked" }}
+                </b-button>
+              </div>
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item>
+              <div class="d-flex justify-content-between">
+                <b-button
+                  variant="primary"
+                  class="mr-2"
+                  size="sm"
+                  :to="'/flowspec/edit/' + data.item.id"
+                >
+                  <font-awesome-icon icon="pencil" />
+                </b-button>
+                <b-button
+                  @click.prevent="del(data.item)"
+                  variant="danger"
+                  size="sm"
+                  class="ms-1"
+                >
+                  <font-awesome-icon icon="trash" />
+                </b-button>
+              </div>
             </b-dropdown-item>
           </b-dropdown>
         </template>
@@ -88,7 +98,7 @@
       </b-row>
     </b-row>
     <b-row v-else>
-      <p class="text-center">No spec rules</p>
+      <p class="text-center">No rules</p>
     </b-row>
   </div>
 </template>

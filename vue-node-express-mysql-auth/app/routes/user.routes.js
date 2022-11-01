@@ -44,7 +44,7 @@ module.exports = function (app) {
     [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.removeUser
   );
-  app.post(
+  app.put(
     "/api/admin/users/changeStatus/:id",
     [authJwt.checkApiKey, authJwt.verifyToken, authJwt.isAdmin],
     controller.changeStatus
