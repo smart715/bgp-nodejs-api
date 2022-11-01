@@ -1,6 +1,5 @@
 <template>
-  <b-row class="rule-edit mt-5">
-    <h1 class="text-center">Add new rule</h1>
+  <b-row class="rule-edit" v-if="rule != null">
     <b-col>
       <b-row class="border-bottom sticky-top bg-white page-header">
         <div class="d-flex align-items-center w-100 mx-3 mt-5">
@@ -8,7 +7,7 @@
             <font-awesome-icon icon="arrow-left-long" />
           </b-link>
           <h5 class="text-uppercase p-0 my-3 mx-2 flex-grow-1">Back</h5>
-          <b-button @click.prevent="saveSettings">Save</b-button>
+          <b-button @click.prevent="saveSettings">update</b-button>
         </div>
       </b-row>
       <b-form>
@@ -21,7 +20,7 @@
             >
               <b-form-textarea
                 id="details"
-                v-model="details"
+                v-model="rule.details"
                 placeholder="Enter details"
                 rows="3"
                 max-rows="6"
@@ -30,9 +29,9 @@
             <b-form-group label="Status" label-for="status" class="mb-3">
               <b-form-select
                 id="status"
-                v-model="status"
-                required
+                v-model="rule.status"
                 :options="options"
+                required
               />
             </b-form-group>
             <b-form-group
@@ -43,7 +42,7 @@
               <b-form-input
                 id="destinationPrefix"
                 name="destinationPrefix"
-                v-model="destinationPrefix"
+                v-model="rule.destinationPrefix"
                 type="text"
                 placeholder="Enter destinationPrefix"
                 required
@@ -51,19 +50,18 @@
             </b-form-group>
             <b-form-group
               id="input-group-4"
-              label="RateLimit"
+              label="Rate Limit"
               label-for="rate_limit"
             >
               <b-form-input
                 id="rate_limit"
                 name="rate_limit"
-                v-model="rate_limit"
+                v-model="rule.rate_limit"
                 type="text"
                 placeholder="Enter rate limit"
                 required
               ></b-form-input>
             </b-form-group>
-
             <b-form-group
               id="input-group-5"
               label="SourcePrefix"
@@ -72,7 +70,7 @@
               <b-form-input
                 id="sourcePrefix"
                 name="sourcePrefix"
-                v-model="sourcePrefix"
+                v-model="rule.sourcePrefix"
                 type="text"
                 placeholder="Enter sourcePrefix"
                 required
@@ -86,7 +84,7 @@
               <b-form-input
                 id="ipProtocol"
                 name="ipProtocol"
-                v-model="ipProtocol"
+                v-model="rule.ipProtocol"
                 type="text"
                 placeholder="Enter ipProtocol"
                 required
@@ -100,7 +98,7 @@
               <b-form-input
                 id="sourcePort"
                 name="sourcePort"
-                v-model="sourcePort"
+                v-model="rule.sourcePort"
                 type="number"
                 placeholder="Enter sourcePort"
                 required
@@ -114,7 +112,7 @@
               <b-form-input
                 id="destinationPort"
                 name="destinationPort"
-                v-model="destinationPort"
+                v-model="rule.destinationPort"
                 type="number"
                 placeholder="Enter destinationPort"
                 required
@@ -128,7 +126,7 @@
               <b-form-input
                 id="ICMPType"
                 name="ICMPType"
-                v-model="ICMPType"
+                v-model="rule.ICMPType"
                 type="text"
                 placeholder="Enter ICMPType"
                 required
@@ -142,7 +140,7 @@
               <b-form-input
                 id="ICMPCode"
                 name="ICMPCode"
-                v-model="ICMPCode"
+                v-model="rule.ICMPCode"
                 type="number"
                 placeholder="Enter ICMPCode"
                 required
@@ -156,7 +154,7 @@
               <b-form-input
                 id="TCPflags"
                 name="TCPflags"
-                v-model="TCPflags"
+                v-model="rule.TCPflags"
                 type="text"
                 placeholder="Enter TCPflags"
                 required
@@ -170,7 +168,7 @@
               <b-form-input
                 id="packetLength"
                 name="packetLength"
-                v-model="packetLength"
+                v-model="rule.packetLength"
                 type="number"
                 placeholder="Enter packetLength"
                 required
@@ -180,7 +178,7 @@
               <b-form-input
                 id="DSCP"
                 name="DSCP"
-                v-model="DSCP"
+                v-model="rule.DSCP"
                 type="text"
                 placeholder="Enter DSCP"
                 required
@@ -194,19 +192,11 @@
               <b-form-input
                 id="FREncoding"
                 name="FREncoding"
-                v-model="FREncoding"
+                v-model="rule.FREncoding"
                 type="text"
                 placeholder="Enter FREncoding"
                 required
               ></b-form-input>
-            </b-form-group>
-            <b-form-group label="IS blocked" label-for="block" class="mb-3">
-              <b-form-select
-                id="block"
-                v-model="is_blocked"
-                :options="booleanOptions"
-                required
-              />
             </b-form-group>
           </div>
         </b-row>
@@ -216,14 +206,12 @@
 </template>
 <script>
 import FlowSpecService from "../../../services/flow-spec.service";
-// import UiFormInput from "../../ui/UiFormInput.vue";
 export default {
-  name: "FlowSpecCreate",
+  name: "FlowSpecEdit",
   data: function () {
     return {
-      rate_limit: 0,
+      rule: null,
       details: "",
-      is_blocked: false,
       status: "active",
       destinationPrefix: "",
       sourcePrefix: "",
@@ -247,16 +235,6 @@ export default {
           text: "Inactive",
         },
       ],
-      booleanOptions: [
-        {
-          value: true,
-          text: "True",
-        },
-        {
-          value: false,
-          text: "False",
-        },
-      ],
     };
   },
   components: {
@@ -267,38 +245,25 @@ export default {
       return this.$store.state.auth.user;
     },
   },
+  mounted() {
+    this.getRuleById();
+  },
   methods: {
+    async getRuleById() {
+      const response = await FlowSpecService.getFlowSpecRuleById(
+        "flowspec/" + this.$route.params.id
+      );
+      this.rule = response.data.rule;
+    },
     async saveSettings() {
       this.errors = {};
-      const response = await FlowSpecService.createFlowSpecRules(
-        "flowspec/create",
-        {
-          rate_limit: this.rate_limit,
-          details: this.details,
-          status: this.status,
-          is_blocked: this.is_blocked,
-          destinationPrefix: this.destinationPrefix,
-          sourcePrefix: this.sourcePrefix,
-          ipProtocol: this.ipProtocol,
-          sourcePort: this.sourcePort,
-          destinationPort: this.destinationPort,
-          ICMPType: this.ICMPType,
-          ICMPCode: this.ICMPCode,
-          TCPflags: this.TCPflags,
-          packetLength: this.packetLength,
-          DSCP: this.DSCP,
-          FREncoding: this.FREncoding,
-        }
+      const response = await FlowSpecService.updateFlowSpecRules(
+        "flowspec/update/" + this.$route.params.id,
+        this.rule
       );
       if (response) {
+        this.rule = response.data.rule;
         this.$router.push({ name: "rule" });
-        // this.user = response.data.user;
-        // this.$bvToast.toast("saved", {
-        //   autoHideDelay: 2000,
-        //   title: "Success",
-        //   solid: true,
-        //   toaster: "b-toaster-bottom-left",
-        // });
       }
     },
   },

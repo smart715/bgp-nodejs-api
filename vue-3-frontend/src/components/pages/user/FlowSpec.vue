@@ -1,23 +1,26 @@
 <template>
   <div class="mt-5">
+    <h1 class="text-center">Manual Rules</h1>
     <b-button variant="primary" class="mr-2" size="sm" :to="'/flowspec/create'">
-      Create
+      <font-awesome-icon icon="plus" /> Add
     </b-button>
+    <div class="d-flex justify-content-end w-100 mx-3">
+      <h5 class="p-0 my-3 mx-3">
+        <font-awesome-icon icon="search" />
+      </h5>
+      <b-nav pills>
+        <b-nav-form class="mr-2">
+          <b-form-input
+            :placeholder="'Detail search'"
+            v-model="q"
+            type="search"
+            @input="handleSearchChange"
+            class="mr-1"
+          ></b-form-input>
+        </b-nav-form>
+      </b-nav>
+    </div>
     <b-row class="rules" v-if="total > 0">
-      <div class="d-flex align-items-center w-100 mx-3">
-        <h5 class="text-uppercase p-0 my-3 flex-grow-1">Search</h5>
-        <b-nav pills>
-          <b-nav-form class="mr-2">
-            <b-form-input
-              :placeholder="'Detail search'"
-              v-model="q"
-              type="search"
-              @input="handleSearchChange"
-              class="mr-1"
-            ></b-form-input>
-          </b-nav-form>
-        </b-nav>
-      </div>
       <b-table
         id="rules-table"
         :items="specRules"
@@ -26,26 +29,62 @@
         :fields="fields"
         ref="rules-table"
         hover
-        responsive
         class="small nowrap"
       >
         <template #cell(actions)="data">
-          <b-button
+          <b-dropdown
+            id="dropdown-dropleft"
+            dropleft
             variant="primary"
-            class="mr-2"
-            size="sm"
-            :to="'/flowspec/edit/' + data.item.id"
+            text="Actions"
+            class="sm-1"
           >
-            <font-awesome-icon icon="pencil" />
-          </b-button>
-          <b-button
-            @click.prevent="del(data.item)"
-            variant="danger"
-            size="sm"
-            class="ms-1"
-          >
-            <font-awesome-icon icon="trash" />
-          </b-button>
+            <b-dropdown-item href="#">
+              <b-nav-form class="">
+                <span class="d-flex align-items-center me-1">Rate</span>
+                <b-form-input
+                  :placeholder="'Detail search'"
+                  v-model="data.item.rate_limit"
+                  type="text"
+                  @input="handleRateLimitChange(data.item)"
+                ></b-form-input>
+              </b-nav-form>
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item href="#">
+              <div class="d-flex justify-content-center">
+                <b-button
+                  @click.prevent="block(data.item)"
+                  variant="primary"
+                  size="sm"
+                  class="ms-1"
+                >
+                  {{ data.item.is_blocked ? "Blocked" : "UnBlocked" }}
+                </b-button>
+              </div>
+            </b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item>
+              <div class="d-flex justify-content-between">
+                <b-button
+                  variant="primary"
+                  class="mr-2"
+                  size="sm"
+                  :to="'/flowspec/edit/' + data.item.id"
+                >
+                  <font-awesome-icon icon="pencil" />
+                </b-button>
+                <b-button
+                  @click.prevent="del(data.item)"
+                  variant="danger"
+                  size="sm"
+                  class="ms-1"
+                >
+                  <font-awesome-icon icon="trash" />
+                </b-button>
+              </div>
+            </b-dropdown-item>
+          </b-dropdown>
         </template>
       </b-table>
       <b-row class="text-center m-3 d-block">
@@ -59,7 +98,7 @@
       </b-row>
     </b-row>
     <b-row v-else>
-      <p class="text-center">No spec rules</p>
+      <p class="text-center">No rules</p>
     </b-row>
   </div>
 </template>
@@ -77,7 +116,7 @@ export default {
       total: 0,
       fields: [
         { key: "id", label: "Id" },
-        { key: "uuid", label: "UUID" },
+        { key: "uuid", label: "Uuid" },
         { key: "details", label: "Details" },
         { key: "status", label: "status" },
         { key: "destinationPrefix", label: "destinationPrefix" },
@@ -130,6 +169,15 @@ export default {
     },
     handleSearchChange() {
       this.loadFlowSpec();
+    },
+    async handleRateLimitChange(item) {
+      const url = "flowspec/update/" + item.id;
+      await FlowSpecService.updateFlowSpecRules(url, item);
+    },
+    async block(item) {
+      item.is_blocked = true;
+      const url = "flowspec/update/" + item.id;
+      await FlowSpecService.updateFlowSpecRules(url, item);
     },
   },
 };

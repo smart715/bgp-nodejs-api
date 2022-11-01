@@ -1,20 +1,21 @@
 <template>
   <div class="mt-5">
+    <h1 class="text-center">Users</h1>
+    <div class="d-flex justify-content-end w-100 mx-3">
+      <h5 class="p-0 my-3 mx-2"><font-awesome-icon icon="search" /></h5>
+      <b-nav pills>
+        <b-nav-form class="mr-2">
+          <b-form-input
+            :placeholder="'Username search'"
+            v-model="q"
+            type="search"
+            @input="handleSearchChange"
+            class="mr-1"
+          ></b-form-input>
+        </b-nav-form>
+      </b-nav>
+    </div>
     <b-row class="users" v-if="total > 0">
-      <div class="d-flex align-items-center w-100 mx-3">
-        <h5 class="text-uppercase p-0 my-3 flex-grow-1">Search</h5>
-        <b-nav pills>
-          <b-nav-form class="mr-2">
-            <b-form-input
-              :placeholder="'Username search'"
-              v-model="q"
-              type="search"
-              @input="handleSearchChange"
-              class="mr-1"
-            ></b-form-input>
-          </b-nav-form>
-        </b-nav>
-      </div>
       <b-table
         id="user-table"
         ref="user-table"
@@ -47,6 +48,21 @@
         <template #cell(roleId)="data">
           {{ showRoleName(data.item.roleId) }}
         </template>
+        <template #cell(createdAt)="data">
+          {{ getDateString(data.item.createdAt) }}
+        </template>
+        <template #cell(updatedAt)="data">
+          {{ getDateString(data.item.updatedAt) }}
+        </template>
+        <template #cell(status)="data">
+          <b-form-checkbox
+            v-model="data.item.status"
+            @change="changeStatus(data.item)"
+            name="check-button"
+            switch
+          >
+          </b-form-checkbox>
+        </template>
       </b-table>
       <b-row class="text-center m-3 d-block">
         <b-pagination
@@ -65,6 +81,7 @@
 </template>
 <script>
 import UserService from "../services/user.service";
+import { DateTime } from "luxon";
 export default {
   name: "BoardAdmin",
   data() {
@@ -81,6 +98,7 @@ export default {
         { key: "createdAt", label: "CreatedAt" },
         { key: "updatedAt", label: "UpdatedAt" },
         { key: "roleId", label: "Role" },
+        { key: "status", label: "Status" },
         { key: "actions", label: "Actions", tdClass: "full" },
       ],
     };
@@ -131,6 +149,16 @@ export default {
         default:
           return "user";
       }
+    },
+    async changeStatus(item) {
+      const url = "/users/changeStatus/" + item.id;
+      const response = await UserService.changeStatus(url, item);
+      if (response.status === 200) {
+        this.loadUsers();
+      }
+    },
+    getDateString(date) {
+      return DateTime.fromISO(date).toFormat("yyyy-M-d");
     },
   },
 };

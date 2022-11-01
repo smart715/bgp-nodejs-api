@@ -51,6 +51,19 @@
                 :options="options"
               />
             </b-form-group>
+            <b-form-group
+              id="input-group-4"
+              label="New password"
+              label-for="password"
+            >
+              <b-form-input
+                id="password"
+                name="password"
+                v-model="password"
+                type="text"
+                placeholder="Enter password"
+              ></b-form-input>
+            </b-form-group>
           </div>
         </b-row>
       </b-form>
@@ -83,8 +96,7 @@ export default {
       ],
       username: "",
       email: "",
-      newPassword: null,
-      newPasswordConfirm: null,
+      password: null,
       errors: {},
     };
   },
@@ -113,6 +125,7 @@ export default {
           username: this.user.username,
           email: this.user.email,
           role: this.user.roleId,
+          password: this.password,
         }
       );
       if (response) {

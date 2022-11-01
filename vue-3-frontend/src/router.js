@@ -13,6 +13,10 @@ const FlowSpec = () => import("./components/pages/user/FlowSpec.vue");
 const FlowSpecLayout = () =>
   import("./components/pages/user/FlowSpecLayout.vue");
 const FlowSpecCreate = () => import("./components/pages/user/FlowSpecAdd.vue");
+const FlowSpecEdit = () => import("./components/pages/user/FlowSpecEdit.vue");
+const Welcome = () => import("./components/Welcome.vue");
+const PasswordReset = () => import("./components/PasswordReset.vue");
+const PasswordResetInput = () => import("./components/PasswordResetInput.vue");
 
 const routes = [
   {
@@ -38,6 +42,21 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: Profile,
+  },
+  {
+    path: "/passwordReset",
+    name: "passwordReset",
+    component: PasswordReset,
+  },
+  {
+    path: "/passwordResetInput/:confirmationCode",
+    name: "passwordResetInput",
+    component: PasswordResetInput,
+  },
+  {
+    path: "/confirm/:confirmationCode",
+    name: "welcome",
+    component: Welcome,
   },
   {
     path: "/admin",
@@ -81,6 +100,11 @@ const routes = [
         name: "flowspecCreate",
         component: FlowSpecCreate,
       },
+      {
+        path: "edit/:id",
+        name: "flowspecEdit",
+        component: FlowSpecEdit,
+      },
     ],
   },
 ];
@@ -88,16 +112,24 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register", "/home"];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem("user");
-  // trying to access a restricted page + not logged in
-  // redirect to login page
-  if (authRequired && !loggedIn) {
-    next("/login");
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const publicPages = [
+//     "/login",
+//     "/register",
+//     "/home",
+//     "/passwordReset",
+//     "/confirm",
+//     "/welcome",
+//     "/passwordResetInput",
+//   ];
+//   const authRequired = !publicPages.includes(to.path);
+//   const loggedIn = localStorage.getItem("user");
+//   // trying to access a restricted page + not logged in
+//   // redirect to login page
+//   if (authRequired && !loggedIn) {
+//     next("/login");
+//   } else {
+//     next();
+//   }
+// });
 export default router;

@@ -14,6 +14,17 @@ module.exports = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING,
     },
+    status: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    is_verified: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    confirmationCode: {
+      type: Sequelize.STRING,
+    },
   });
   return User;
 };

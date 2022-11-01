@@ -1,4 +1,4 @@
-const { verifySignUp } = require("../middleware");
+const { authJwt, verifySignUp } = require("../middleware");
 const controller = require("../controllers/auth.controller");
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -8,10 +8,25 @@ module.exports = function (app) {
     );
     next();
   });
+  app.get(
+    "/api/auth/confirm/:confirmationCode",
+    [authJwt.checkApiKey],
+    controller.verifyUser
+  );
   app.post(
     "/api/auth/signup",
-    [verifySignUp.checkDuplicateUsernameOrEmail],
+    [authJwt.checkApiKey, verifySignUp.checkDuplicateUsernameOrEmail],
     controller.signup
   );
-  app.post("/api/auth/signin", controller.signin);
+  app.post("/api/auth/signin", [authJwt.checkApiKey], controller.signin);
+  app.post(
+    "/api/auth/sendResetEmail",
+    [authJwt.checkApiKey],
+    controller.sendResetEmail
+  );
+  app.post(
+    "/api/auth/passwordReset",
+    [authJwt.checkApiKey],
+    controller.passwordReset
+  );
 };

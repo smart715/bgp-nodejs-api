@@ -9,7 +9,7 @@
       </li>
       <li v-if="showAdminBoard" class="nav-item">
         <router-link :to="{ name: 'admin' }" class="nav-link"
-          >Admin Board</router-link
+          ><font-awesome-icon icon="users" /> Users</router-link
         >
       </li>
       <li v-if="showModeratorBoard" class="nav-item">
@@ -24,11 +24,11 @@
       </li> -->
       <li class="nav-item">
         <router-link v-if="currentUser" :to="{ name: 'rule' }" class="nav-link"
-          >FlowSpec</router-link
+          ><font-awesome-icon icon="clipboard-list" /> Rules</router-link
         >
       </li>
     </div>
-    <div v-if="!currentUser" class="navbar-nav">
+    <div v-if="!currentUser" class="navbar-nav ms-auto">
       <li class="nav-item">
         <router-link :to="{ name: 'register' }" class="nav-link">
           <font-awesome-icon icon="user-plus" /> Sign Up

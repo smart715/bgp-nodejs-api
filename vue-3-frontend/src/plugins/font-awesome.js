@@ -9,6 +9,10 @@ import {
   faPencil,
   faTrash,
   faArrowLeftLong,
+  faClipboardList,
+  faUsers,
+  faSearch,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faPencil,
@@ -18,6 +22,10 @@ library.add(
   faUserPlus,
   faSignInAlt,
   faSignOutAlt,
-  faArrowLeftLong
+  faArrowLeftLong,
+  faClipboardList,
+  faUsers,
+  faSearch,
+  faPlus
 );
 export { FontAwesomeIcon };

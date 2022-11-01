@@ -3,6 +3,18 @@ const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
+
+checkApiKey = (req, res, next) => {
+  let token = req.headers["x-api-key"];
+  if (token && token == config.APP_KEY) {
+    next();
+  } else {
+    return res.status(403).send({
+      message: "X-APP-KEY INVALID",
+    });
+  }
+};
+
 verifyToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
   if (!token) {
@@ -62,6 +74,7 @@ isModeratorOrAdmin = (req, res, next) => {
   });
 };
 const authJwt = {
+  checkApiKey: checkApiKey,
   verifyToken: verifyToken,
   isAdmin: isAdmin,
   isModerator: isModerator,

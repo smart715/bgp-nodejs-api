@@ -6,7 +6,8 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
     },
     uuid: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
     },
     details: {
       type: Sequelize.STRING,
@@ -52,6 +53,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     FREncoding: {
       type: Sequelize.STRING,
+    },
+    is_blocked: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+    rate_limit: {
+      type: Sequelize.FLOAT,
     },
   });
   return FlowSpec;

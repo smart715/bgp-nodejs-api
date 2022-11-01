@@ -9,18 +9,33 @@ module.exports = function (app) {
     next();
   });
   app.get(
-    "/api/test/flowspec",
-    [authJwt.verifyToken],
+    "/api/flowspec",
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.getSpecByUserId
   );
+  app.get(
+    "/api/flowspec/all",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.getAllSpecRules
+  );
   app.post(
-    "/api/test/flowspec/create",
-    [authJwt.verifyToken],
+    "/api/flowspec/create",
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.createFlowSpecRule
   );
+  app.put(
+    "/api/flowspec/update/:id",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.updateFlowSpecRule
+  );
   app.delete(
-    "/api/test/flowspec/delete/:id",
-    [authJwt.verifyToken],
+    "/api/flowspec/delete/:id",
+    [authJwt.checkApiKey, authJwt.verifyToken],
     controller.removeFlowSpecRule
+  );
+  app.get(
+    "/api/flowspec/:id",
+    [authJwt.checkApiKey, authJwt.verifyToken],
+    controller.getRuleByIdByUser
   );
 };
