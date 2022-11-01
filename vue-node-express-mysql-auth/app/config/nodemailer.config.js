@@ -1,14 +1,15 @@
 const nodemailer = require("nodemailer");
 const config = require("./auth.config");
 
-const user = config.user;
-const pass = config.pass;
+const user = config.MAIL_USERNAME;
+const pass = config.MAIL_PASSWORD;
 
 const transport = nodemailer.createTransport({
-  service: "Gmail",
+  host: 'smtp.mailtrap.io',
+  port: 2525,
   auth: {
     user: user,
-    pass: pass,
+    pass: pass
   },
 });
 

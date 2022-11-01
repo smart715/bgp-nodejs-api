@@ -1,141 +1,642 @@
 {
 	"info": {
-		"_postman_id": "0e1cf0da-ae2d-49ee-a031-9a69c3868c14",
+		"_postman_id": "667315a2-bb79-4061-b89f-a781ccb3b116",
 		"name": "GOBGP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20591094"
 	},
 	"item": [
 		{
-			"name": "login",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-api-key",
-						"value": "{{apiKey}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"thomas\",\r\n    \"password\": \"123123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"thomas\",\r\n    \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/signin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/auth/signin",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"auth",
-						"signin"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "signup",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-api-key",
-						"value": "{{apiKey}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"thomas\",\r\n    \"email\": \"tom@gmail.com\",\r\n    \"password\": \"123123\"\r\n\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/auth/signup",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"auth",
-						"signup"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "create flowspec rule",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-access-token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
-						"type": "default"
 					},
-					{
-						"key": "x-api-key",
-						"value": "{{apiKey}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"uuid\": 10,\r\n    \"details\": \"www\",\r\n    \"status\": \"active\",\r\n    \"destinationPrefix\": \"we\",\r\n    \"sourcePrefix\": \"qw\",\r\n    \"ipProtocol\": \"ipprotocol\",\r\n    \"sourcePort\": 3000,\r\n    \"destinationPort\": 4000,\r\n    \"ICMPType\": \"icmptype1\",\r\n    \"ICMPCode\": 2400,\r\n    \"TCPflags\": \"C2\",\r\n    \"packetLength\": 4,\r\n    \"DSCP\": \"Dscp\",\r\n    \"FREncoding\": \"frencoding\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/api/test/flowspec/create",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"test",
-						"flowspec",
-						"create"
-					]
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"thomas\",\r\n    \"email\": \"tom@gmail.com\",\r\n    \"password\": \"123123\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"confirmationCode\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZ21haWwuY29tIiwiaWF0IjoxNjY3MjY0NTE4fQ.THHZ8OH_du13_Skvh-FbYGCVt3_x0zTVGmv3s9T7G-8\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/passwordReset",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"passwordReset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup confirm",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "/api/auth/confirm/sdfsadsdfsdfdfsdfsdfsdfsdfsdfsdfsdfs",
+							"path": [
+								"api",
+								"auth",
+								"confirm",
+								"sdfsadsdfsdfdfsdfsdfsdfsdfsdfsdfsdfs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Password Reset Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{x-api-key}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/sendResetEmail",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"sendResetEmail"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "remove flow spec rule",
+			"name": "Flowspec",
+			"item": [
+				{
+					"name": "create flowspec rule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
+								"type": "default"
+							},
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"details\": \"www\",\r\n    \"status\": \"active\",\r\n    \"destinationPrefix\": \"we\",\r\n    \"sourcePrefix\": \"qw\",\r\n    \"ipProtocol\": \"ipprotocol\",\r\n    \"sourcePort\": 3000,\r\n    \"destinationPort\": 4000,\r\n    \"ICMPType\": \"icmptype1\",\r\n    \"ICMPCode\": 2400,\r\n    \"TCPflags\": \"C2\",\r\n    \"packetLength\": 4,\r\n    \"DSCP\": \"Dscp\",\r\n    \"FREncoding\": \"frencoding\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/test/flowspec/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"test",
+								"flowspec",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove flow spec rule",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/test/flowspec/delete/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"test",
+								"flowspec",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get FlowSpec Rules By User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/flowspec",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"flowspec"
+							],
+							"query": [
+								{
+									"key": "x-api-key",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update flowspec rule by Id  by user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"details\": \"hello\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/flowspec/update/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"flowspec",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete flowspec rule by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "asdfsdfsdfasdfasdfsdfsdfsadfdffsdfsdf",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/flowspec/delete/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"flowspec",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Flow Spec Rule By Id By user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqweqweqweqwe",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/flowspec/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"flowspec",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage User",
+			"item": [
+				{
+					"name": "Get all users in Admin Role",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqweqwe",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user By id admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqw",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user profile by admin",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqwe",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"username\": \"xxxx\",\r\n    \"email\": \"x@gmail.com\",\r\n    \"passowrd\": \"123123\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/edit/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqweqweqwe",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user by id in admin",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqwe",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/delete/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change user status by admin",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qweqweqweqwewq",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"status\": \"active\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/changeStatus/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								"changeStatus",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User profile update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{apiKey}}",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "qeqweqweqweqweqwe",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"username\": \"x\",\r\n    \"email\": \"x@gmail.com\",\r\n    \"password\": \"1123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/profile/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get All Access",
 			"request": {
-				"method": "DELETE",
+				"method": "GET",
 				"header": [
 					{
 						"key": "x-api-key",
 						"value": "{{apiKey}}",
-						"type": "text"
+						"type": "default"
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}/api/test/flowspec/delete/1",
+					"raw": "{{baseUrl}}/api/all",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
-						"test",
-						"flowspec",
-						"delete",
-						"1"
+						"all"
 					]
 				}
 			},
