@@ -10,7 +10,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "login",
+					"name": "Login",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"thomas\",\r\n    \"password\": \"123123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"123123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,7 +44,7 @@
 					"response": []
 				},
 				{
-					"name": "signup",
+					"name": "Register",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -78,7 +78,7 @@
 					"response": []
 				},
 				{
-					"name": "Password Reset",
+					"name": "Forgot Password",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -89,62 +89,15 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"confirmationCode\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZ21haWwuY29tIiwiaWF0IjoxNjY3MjY0NTE4fQ.THHZ8OH_du13_Skvh-FbYGCVt3_x0zTVGmv3s9T7G-8\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin@gmail.com",
+									"type": "text"
 								}
-							}
+							]
 						},
-						"url": {
-							"raw": "{{base_url}}/api/auth/passwordReset",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"auth",
-								"passwordReset"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "signup confirm",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "/api/auth/confirm/sdfsadsdfsdfdfsdfsdfsdfsdfsdfsdfsdfs",
-							"path": [
-								"api",
-								"auth",
-								"confirm",
-								"sdfsadsdfsdfdfsdfsdfsdfsdfsdfsdfsdfs"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Send Password Reset Email",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "{{x-api-key}}",
-								"type": "default"
-							}
-						],
 						"url": {
 							"raw": "{{baseUrl}}/api/auth/sendResetEmail",
 							"host": [
@@ -171,7 +124,7 @@
 						"header": [
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
+								"value": "{{authBearer}}",
 								"type": "default"
 							},
 							{
@@ -190,13 +143,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/api/test/flowspec/create",
+							"raw": "{{baseUrl}}/api/flowspec/create",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
-								"test",
 								"flowspec",
 								"create"
 							]
@@ -213,16 +165,20 @@
 								"key": "x-api-key",
 								"value": "{{apiKey}}",
 								"type": "text"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{authBearer}}",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/test/flowspec/delete/1",
+							"raw": "{{baseUrl}}/api/flowspec/delete/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
-								"test",
 								"flowspec",
 								"delete",
 								"1"
@@ -243,7 +199,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -279,7 +235,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjY3MTc3OTQ1LCJleHAiOjE2NjcyNjQzNDV9.VMoxusomjzfBN4JLBxqhVzBtonQWK9lKRIiChA1tOCw",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -319,7 +275,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "asdfsdfsdfasdfasdfsdfsdfsadfdffsdfsdf",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -350,7 +306,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqweqweqweqwe",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -385,7 +341,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqweqwe",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -415,7 +371,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqw",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -446,7 +402,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqwe",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -487,7 +443,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqweqweqwe",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -516,7 +472,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqwe",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -548,7 +504,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qweqweqweqwewq",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -589,7 +545,7 @@
 							},
 							{
 								"key": "x-access-token",
-								"value": "qeqweqweqweqweqwe",
+								"value": "{{authBearer}}",
 								"type": "default"
 							}
 						],
@@ -617,30 +573,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Get All Access",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-api-key",
-						"value": "{{apiKey}}",
-						"type": "default"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}/api/all",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"all"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -676,7 +608,7 @@
 		},
 		{
 			"key": "authBearer",
-			"value": "",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY3Mjk5NDE4LCJleHAiOjE2NjczODU4MTh9.JLzAozjlY5GAa4YRA3RqIodh9cEXW6wPWSmntzMFR1o",
 			"type": "string"
 		}
 	]
