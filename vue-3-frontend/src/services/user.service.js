@@ -1,7 +1,7 @@
 import axios from "axios";
+import { config } from "../config";
 import authHeader from "./auth-header";
-
-const API_URL = "http://localhost:8080/api/";
+const API_URL = config.API_URL;
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + "all", { headers: authHeader() });

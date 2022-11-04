@@ -41,7 +41,7 @@
           >
             <b-dropdown-item href="#">
               <b-nav-form class="">
-                <span class="d-flex align-items-center me-1">Rate</span>
+                <span class="d-flex align-items-center me-1">Rate <br>Limit<br>(Mbps)</span>
                 <b-form-input
                   :placeholder="'Detail search'"
                   v-model="data.item.rate_limit"

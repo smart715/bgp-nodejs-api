@@ -24,7 +24,7 @@
       </li> -->
       <li class="nav-item">
         <router-link v-if="currentUser" :to="{ name: 'rule' }" class="nav-link"
-          ><font-awesome-icon icon="clipboard-list" /> Rules</router-link
+          ><font-awesome-icon icon="clipboard-list" /> Manual Rules</router-link
         >
       </li>
     </div>
