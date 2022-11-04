@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const config = require("./app/config/auth.config");
 var corsOptions = {
-  origin: "http://localhost:8081",
+  origin: config.FRONTEND_URL,
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
