@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from "../config";
 import authHeader from "./auth-header";
-const API_URL = config.API_URL;
+const API_URL = config.API_URL+'auth/';
 export default {
   login(user) {
     return axios

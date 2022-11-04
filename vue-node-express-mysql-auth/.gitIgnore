@@ -1,3 +1,5 @@
 node_modules
 .env
-app/config
+
+/app/config/auth.config.js
+/app/config/db.config.js
